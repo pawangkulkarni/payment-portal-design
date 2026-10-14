@@ -32,7 +32,7 @@ Retail customers pay by credit card; the portal checks for fraud, charges the ca
 - Scalability - 100,000 transactions per day at launch, growing to 1 million
 - Security - encrypted in transit and at rest, PCI compliant, no raw card numbers stored
 
-## System Context
+## Context diagram
 
 ```mermaid
 graph LR
