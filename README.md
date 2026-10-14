@@ -112,3 +112,17 @@ graph TD
 | Stripe calls per second, peak | 3 | 30 |
 | Fraud checks per second, peak | 3 | 30 |
 | Requests in flight at peak (peak * 3 s) | about 9 | about 90 |
+
+## Capacity Summary
+
+- Storage - about 1.1 TB per copy, about 3.4 TB with 3 copies (7 years at 1 million payments per day)
+- Partitions - 1 (no sharding). One database machine holds about 10 TB, so 1.1 TB fits easily
+- Database servers - 3 (1 primary + 2 replicas), each holding the full 1.1 TB
+- Peak load - 30 payments per second, about 90 in flight, 60 database writes and 90 reads per second
+- Processing servers (assuming one server handles about 100 requests in flight)
+  - Payment service - 90 / 100 = 1 needed, 2 for headroom, 3 with a spare
+  - Portal - 2
+  - Fraud check - 2
+  - Confirmation service - 2
+- Total - 9 processing servers + 3 database servers = 12 machines, behind a load balancer
+- At the MVP (10^5 per day) the load is about 10 times smaller, so the same layout has plenty of room
